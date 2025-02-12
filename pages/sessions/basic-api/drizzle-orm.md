@@ -20,7 +20,7 @@ import { drizzle } from "drizzle-orm/mysql2";
 import type { InferSelectModel } from "drizzle-orm";
 
 const connection = await mysql.createConnection();
-const db = drizzle(connection);
+export const db = drizzle(connection);
 
 export const userTable = mysqlTable("user", {
 	id: int("id").primaryKey().autoincrement()
@@ -50,7 +50,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import type { InferSelectModel } from "drizzle-orm";
 
 const pool = new pg.Pool();
-const db = drizzle(pool);
+export const db = drizzle(pool);
 
 export const userTable = pgTable("user", {
 	id: serial("id").primaryKey()
@@ -81,7 +81,7 @@ import { drizzle } from "drizzle-orm/better-sqlite3";
 import type { InferSelectModel } from "drizzle-orm";
 
 const sqliteDB = sqlite(":memory:");
-const db = drizzle(sqliteDB);
+export const db = drizzle(sqliteDB);
 
 export const userTable = sqliteTable("user", {
 	id: integer("id").primaryKey()
@@ -172,6 +172,8 @@ import { eq } from "drizzle-orm";
 import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from "@oslojs/encoding";
 import { sha256 } from "@oslojs/crypto/sha2";
 
+import type { User, Session } from "./db.js";
+
 // ...
 
 export async function createSession(token: string, userId: number): Promise<Session> {
@@ -200,6 +202,8 @@ import { db, userTable, sessionTable } from "./db.js";
 import { eq } from "drizzle-orm";
 import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from "@oslojs/encoding";
 import { sha256 } from "@oslojs/crypto/sha2";
+
+import type { User, Session } from "./db.js";
 
 // ...
 
